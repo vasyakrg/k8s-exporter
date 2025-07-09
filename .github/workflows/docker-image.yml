@@ -37,5 +37,4 @@ jobs:
           context: .
           push: true
           tags: |
-            vasyakrg/k8s-exporter:latest
             ghcr.io/vasyakrg/k8s-exporter:latest

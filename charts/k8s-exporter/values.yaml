@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: k8s-exporter
+  repository: ghcr.io/vasyakrg/k8s-exporter
   tag: latest
   pullPolicy: IfNotPresent
 
