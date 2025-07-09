@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "k8s-exporter.fullname" . }}
+  labels:
+    app: {{ include "k8s-exporter.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "k8s-exporter.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "k8s-exporter.name" . }}
+    spec:
+      volumes:
+        - name: kubeconfig
+          configMap:
+            name: {{ include "k8s-exporter.fullname" . }}-kubeconfig
+      containers:
+      - name: k8s-exporter
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: kubeconfig
+          mountPath: /app/kube
+          subPath: kube
+        args:
+        - "--kubeconfig"
+        - "/app/kube"

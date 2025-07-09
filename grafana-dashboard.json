@@ -1,0 +1,120 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Kubernetes Nodes Exporter",
+    "panels": [
+      {
+        "type": "table",
+        "title": "Node Info by Cluster",
+        "gridPos": {"x": 0, "y": 0, "w": 24, "h": 10},
+        "targets": [
+          {
+            "expr": "k8s_node_info",
+            "format": "table",
+            "legendFormat": "{{context}} - {{node}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "overrides": [],
+          "defaults": {
+            "custom": {}
+          }
+        },
+        "options": {
+          "showHeader": true
+        }
+      },
+      {
+        "type": "table",
+        "title": "Node Conditions by Cluster",
+        "gridPos": {"x": 0, "y": 10, "w": 24, "h": 10},
+        "targets": [
+          {
+            "expr": "k8s_node_condition",
+            "format": "table",
+            "legendFormat": "{{context}} - {{node}} - {{type}}",
+            "refId": "B"
+          }
+        ],
+        "fieldConfig": {
+          "overrides": [
+            {
+              "matcher": {"id": "byName", "options": "Value"},
+              "properties": [
+                {
+                  "id": "color", "value": {
+                    "mode": "thresholds"
+                  }
+                },
+                {
+                  "id": "thresholds",
+                  "value": {
+                    "mode": "absolute",
+                    "steps": [
+                      {"color": "red", "value": 0},
+                      {"color": "green", "value": 1}
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "defaults": {
+            "custom": {}
+          }
+        },
+        "options": {
+          "showHeader": true
+        }
+      },
+      {
+        "type": "table",
+        "title": "Node Capacity by Cluster",
+        "gridPos": {"x": 0, "y": 20, "w": 24, "h": 10},
+        "targets": [
+          {
+            "expr": "k8s_node_capacity",
+            "format": "table",
+            "legendFormat": "{{context}} - {{node}} - {{resource}}",
+            "refId": "C"
+          }
+        ],
+        "fieldConfig": {
+          "overrides": [],
+          "defaults": {
+            "custom": {}
+          }
+        },
+        "options": {
+          "showHeader": true
+        }
+      },
+      {
+        "type": "table",
+        "title": "Node Allocatable by Cluster",
+        "gridPos": {"x": 0, "y": 30, "w": 24, "h": 10},
+        "targets": [
+          {
+            "expr": "k8s_node_allocatable",
+            "format": "table",
+            "legendFormat": "{{context}} - {{node}} - {{resource}}",
+            "refId": "D"
+          }
+        ],
+        "fieldConfig": {
+          "overrides": [],
+          "defaults": {
+            "custom": {}
+          }
+        },
+        "options": {
+          "showHeader": true
+        }
+      }
+    ],
+    "schemaVersion": 37,
+    "version": 1,
+    "refresh": "30s"
+  }
+}

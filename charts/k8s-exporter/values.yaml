@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: k8s-exporter
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+resources: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+kubeConfig: |-
+  # вставьте содержимое kubeconfig.yaml сюда
