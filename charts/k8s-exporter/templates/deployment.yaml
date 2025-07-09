@@ -4,6 +4,13 @@ metadata:
   name: {{ include "k8s-exporter.fullname" . }}
   labels:
     app: {{ include "k8s-exporter.name" . }}
+{{- with .Values.labels }}
+{{ toYaml . | indent 4 }}
+{{- end }}
+{{- with .Values.annotations }}
+annotations:
+{{ toYaml . | indent 2 }}
+{{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:

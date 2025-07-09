@@ -15,5 +15,12 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
+labels: {}
+annotations: {}
+serviceMonitor:
+  enabled: true
+  labels: {}
+  annotations: {}
+
 kubeConfig: |-
   # вставьте содержимое kubeconfig.yaml сюда

@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "k8s-exporter.fullname" . }}
+  labels:
+    app: {{ include "k8s-exporter.name" . }}
+    release: prometheus
+{{- with .Values.serviceMonitor.labels }}
+{{ toYaml . | indent 4 }}
+{{- end }}
+{{- with .Values.serviceMonitor.annotations }}
+annotations:
+{{ toYaml . | indent 2 }}
+{{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "k8s-exporter.name" . }}
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
+  namespaceSelector:
+    any: true
