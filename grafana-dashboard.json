@@ -1,120 +1,326 @@
 {
-  "dashboard": {
-    "id": null,
-    "title": "Kubernetes Nodes Exporter",
-    "panels": [
+  "annotations": {
+    "list": [
       {
-        "type": "table",
-        "title": "Node Info by Cluster",
-        "gridPos": {"x": 0, "y": 0, "w": 24, "h": 10},
-        "targets": [
-          {
-            "expr": "k8s_node_info",
-            "format": "table",
-            "legendFormat": "{{context}} - {{node}}",
-            "refId": "A"
-          }
-        ],
-        "fieldConfig": {
-          "overrides": [],
-          "defaults": {
-            "custom": {}
-          }
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
         },
-        "options": {
-          "showHeader": true
-        }
-      },
-      {
-        "type": "table",
-        "title": "Node Conditions by Cluster",
-        "gridPos": {"x": 0, "y": 10, "w": 24, "h": 10},
-        "targets": [
-          {
-            "expr": "k8s_node_condition",
-            "format": "table",
-            "legendFormat": "{{context}} - {{node}} - {{type}}",
-            "refId": "B"
-          }
-        ],
-        "fieldConfig": {
-          "overrides": [
-            {
-              "matcher": {"id": "byName", "options": "Value"},
-              "properties": [
-                {
-                  "id": "color", "value": {
-                    "mode": "thresholds"
-                  }
-                },
-                {
-                  "id": "thresholds",
-                  "value": {
-                    "mode": "absolute",
-                    "steps": [
-                      {"color": "red", "value": 0},
-                      {"color": "green", "value": 1}
-                    ]
-                  }
-                }
-              ]
-            }
-          ],
-          "defaults": {
-            "custom": {}
-          }
-        },
-        "options": {
-          "showHeader": true
-        }
-      },
-      {
-        "type": "table",
-        "title": "Node Capacity by Cluster",
-        "gridPos": {"x": 0, "y": 20, "w": 24, "h": 10},
-        "targets": [
-          {
-            "expr": "k8s_node_capacity",
-            "format": "table",
-            "legendFormat": "{{context}} - {{node}} - {{resource}}",
-            "refId": "C"
-          }
-        ],
-        "fieldConfig": {
-          "overrides": [],
-          "defaults": {
-            "custom": {}
-          }
-        },
-        "options": {
-          "showHeader": true
-        }
-      },
-      {
-        "type": "table",
-        "title": "Node Allocatable by Cluster",
-        "gridPos": {"x": 0, "y": 30, "w": 24, "h": 10},
-        "targets": [
-          {
-            "expr": "k8s_node_allocatable",
-            "format": "table",
-            "legendFormat": "{{context}} - {{node}} - {{resource}}",
-            "refId": "D"
-          }
-        ],
-        "fieldConfig": {
-          "overrides": [],
-          "defaults": {
-            "custom": {}
-          }
-        },
-        "options": {
-          "showHeader": true
-        }
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
       }
-    ],
-    "schemaVersion": 37,
-    "version": 1,
-    "refresh": "30s"
-  }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 81,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "displayName": "Cluster Info",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": ""
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.1.2",
+      "repeat": "cluster",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "k8s-infra"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "k8s_node_info{context=~\"$cluster\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "{{label_name}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Cluster Info: $cluster",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true,
+              "__name__": true,
+              "architecture": true,
+              "container": true,
+              "containerRuntimeVersion": true,
+              "context": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "kernelVersion": false,
+              "kubeletVersion": false,
+              "namespace": true,
+              "operatingSystem": true,
+              "pod": true,
+              "service": true
+            },
+            "indexByName": {
+              "Time": 1,
+              "Value": 17,
+              "__name__": 2,
+              "architecture": 3,
+              "container": 4,
+              "containerRuntimeVersion": 5,
+              "context": 6,
+              "endpoint": 7,
+              "instance": 8,
+              "job": 9,
+              "kernelVersion": 10,
+              "kubeletVersion": 11,
+              "namespace": 12,
+              "node": 0,
+              "operatingSystem": 13,
+              "osImage": 14,
+              "pod": 15,
+              "service": 16
+            },
+            "renameByName": {
+              "kernelVersion": "kernelVersion",
+              "kubeletVersion": "kubeletVersion",
+              "node": "node",
+              "osImage": "osImage"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_PROMETHEUS}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Ready.*"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "thresholds"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "green",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "name"
+      },
+      "pluginVersion": "10.1.2",
+      "repeat": "node",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "expr": "k8s_node_condition{context=~\"$cluster\",node=~\"$node\"}",
+          "legendFormat": "{{type}}",
+          "refId": "B"
+        }
+      ],
+      "title": "$node",
+      "type": "stat"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "default",
+          "value": "default"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Prometheus",
+        "multi": false,
+        "name": "DS_PROMETHEUS",
+        "options": [],
+        "pluginId": "prometheus",
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": "k8s-camunda",
+          "value": "k8s-camunda"
+        },
+        "datasource": {
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": "label_values(k8s_node_info, context)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Node",
+        "multi": false,
+        "name": "node",
+        "options": [],
+        "query": "label_values(k8s_node_condition{context=~\"$cluster\"}, node)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Main Kubernetes Info",
+  "version": 1,
+  "weekStart": ""
 }

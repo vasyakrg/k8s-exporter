@@ -8,15 +8,15 @@ metadata:
 {{ toYaml . | indent 4 }}
 {{- end }}
 {{- with .Values.annotations }}
-annotations:
-{{ toYaml . | indent 2 }}
+  annotations:
+{{ toYaml . | indent 4 }}
 {{- end }}
 spec:
-  type: { { .Values.service.type } }
+  type: {{ .Values.service.type }}
   ports:
-    - port: { { .Values.service.port } }
+    - port: {{ .Values.service.port }}
       targetPort: 8080
       protocol: TCP
       name: http
   selector:
-    app: { { include "k8s-exporter.name" . } }
+    app: {{ include "k8s-exporter.name" . }}
